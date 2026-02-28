@@ -25,14 +25,6 @@ export default function DisqualifiedScreen() {
   useEffect(() => {
     const score = 0;
     const total = questions.length;
-    const token = `${questionsVersion}:${score}:${total}:dq`;
-
-    try {
-      const sent = localStorage.getItem("quiz_dq_sent");
-      if (sent === token) return;
-    } catch {
-      // ignore
-    }
 
     const sendScore = async () => {
       try {
@@ -46,7 +38,6 @@ export default function DisqualifiedScreen() {
             verdict: "Disqualified",
           }),
         });
-        localStorage.setItem("quiz_dq_sent", token);
         setSendStatus("sent");
       } catch {
         setSendError("Email send failed.");
