@@ -1,0 +1,411 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cinzel+Decorative:wght@400;700;900&display=swap');
+@import "tailwindcss";
+
+/* ── Theme Variables ── */
+:root {
+  --bg-primary: #0b0b0f;
+  --bg-secondary: #0f0f14;
+  --red-accent: #8b0000;
+  --red-glow: rgba(139, 0, 0, 0.5);
+  --text-primary: #e5e5e5;
+  --text-muted: #737373;
+}
+
+@theme inline {
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
+}
+
+/* ── Base ── */
+* {
+  cursor: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@media (pointer: coarse) {
+  * {
+    cursor: auto;
+  }
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Cinzel', serif;
+  overflow-x: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(139,0,0,0.06) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0b0f;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a0a0a;
+  border-radius: 3px;
+}
+
+/* ── Shivering Cross ── */
+.cross-shiver {
+  animation: crossShiver 0.12s infinite alternate;
+  filter: drop-shadow(0 0 12px rgba(139, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(139, 0, 0, 0.2));
+  transform-origin: center center;
+}
+
+.cross-svg {
+  filter: drop-shadow(0 0 6px rgba(139, 0, 0, 0.6));
+}
+
+@keyframes crossShiver {
+  0% {
+    transform: translate(-0.5px, 0) rotate(-0.3deg);
+  }
+  10% {
+    transform: translate(0.5px, -0.3px) rotate(0.2deg);
+  }
+  20% {
+    transform: translate(-0.3px, 0.5px) rotate(-0.2deg);
+  }
+  30% {
+    transform: translate(0.4px, 0.2px) rotate(0.3deg);
+  }
+  40% {
+    transform: translate(-0.4px, -0.4px) rotate(-0.1deg);
+  }
+  50% {
+    transform: translate(0.3px, 0.4px) rotate(0.15deg);
+  }
+  60% {
+    transform: translate(-0.2px, -0.3px) rotate(-0.25deg);
+  }
+  70% {
+    transform: translate(0.5px, 0.1px) rotate(0.2deg);
+  }
+  80% {
+    transform: translate(-0.3px, 0.3px) rotate(-0.15deg);
+  }
+  90% {
+    transform: translate(0.2px, -0.5px) rotate(0.3deg);
+  }
+  100% {
+    transform: translate(0.4px, 0.2px) rotate(-0.2deg);
+  }
+}
+
+/* ── Hero Title ── */
+.hero-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  background: linear-gradient(180deg, #8b0000 0%, #cc2222 40%, #8b0000 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(0 0 30px rgba(139, 0, 0, 0.4)) drop-shadow(0 0 60px rgba(139, 0, 0, 0.15));
+}
+
+/* ── Flicker Animation ── */
+.flicker {
+  animation: flicker 4s infinite;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.8; }
+  94% { opacity: 1; }
+  96% { opacity: 0.9; }
+  97% { opacity: 1; }
+}
+
+/* ── Ritual Card ── */
+.ritual-card {
+  background: linear-gradient(145deg, rgba(15,15,20,0.95), rgba(20,10,10,0.9));
+  border: 1px solid rgba(139, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow:
+    0 0 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(139, 0, 0, 0.1);
+  position: relative;
+}
+
+.ritual-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 12px;
+  padding: 1px;
+  background: linear-gradient(145deg, rgba(139,0,0,0.3), transparent, rgba(139,0,0,0.1));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ── Gothic Buttons ── */
+.gothic-btn {
+  position: relative;
+  padding: 0.75rem 2rem;
+  border: 1px solid rgba(139, 0, 0, 0.4);
+  border-radius: 8px;
+  background: rgba(139, 0, 0, 0.1);
+  color: #d4d4d4;
+  font-family: 'Cinzel', serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.gothic-btn:hover {
+  border-color: rgba(139, 0, 0, 0.8);
+  background: rgba(139, 0, 0, 0.2);
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(139, 0, 0, 0.3), 0 0 40px rgba(139, 0, 0, 0.1);
+}
+
+.gothic-btn-primary {
+  background: rgba(139, 0, 0, 0.25);
+  border-color: rgba(139, 0, 0, 0.6);
+  color: #e5e5e5;
+}
+
+.gothic-btn-primary:hover {
+  background: rgba(139, 0, 0, 0.4);
+  box-shadow: 0 0 30px rgba(139, 0, 0, 0.4), 0 0 60px rgba(139, 0, 0, 0.15);
+}
+
+/* ── Mute Button ── */
+.mute-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(139, 0, 0, 0.3);
+  background: rgba(11, 11, 15, 0.9);
+  color: #8b0000;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.mute-btn:hover {
+  border-color: rgba(139, 0, 0, 0.6);
+  box-shadow: 0 0 15px rgba(139, 0, 0, 0.3);
+}
+
+/* ── Glitch Text ── */
+.glitch-text {
+  animation: glitch 0.3s infinite;
+  position: relative;
+}
+
+@keyframes glitch {
+  0% {
+    text-shadow: 2px 0 #ff0000, -2px 0 #00ff00;
+    transform: translate(0);
+  }
+  20% {
+    text-shadow: -2px 0 #ff0000, 2px 0 #00ff00;
+    transform: translate(-1px, 1px);
+  }
+  40% {
+    text-shadow: 2px 0 #ff0000, -2px 0 #00ff00;
+    transform: translate(1px, -1px);
+  }
+  60% {
+    text-shadow: -1px 0 #ff0000, 1px 0 #00ff00;
+    transform: translate(-1px, 0);
+  }
+  80% {
+    text-shadow: 1px 0 #ff0000, -1px 0 #00ff00;
+    transform: translate(1px, 1px);
+  }
+  100% {
+    text-shadow: 2px 0 #ff0000, -2px 0 #00ff00;
+    transform: translate(0);
+  }
+}
+
+/* ── Screen Flicker (for low score result) ── */
+.screen-flicker {
+  animation: screenFlicker 0.15s ease-in-out 6;
+}
+
+@keyframes screenFlicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; filter: brightness(1.1) saturate(1.3); }
+}
+
+/* ── Particles ── */
+.particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.particles::before,
+.particles::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: rgba(139, 0, 0, 0.3);
+  animation: float 15s infinite linear;
+}
+
+.particles::before {
+  top: 20%;
+  left: 10%;
+  box-shadow:
+    100px 50px 0 rgba(139,0,0,0.15),
+    300px 150px 0 rgba(139,0,0,0.1),
+    500px 80px 0 rgba(139,0,0,0.2),
+    700px 200px 0 rgba(139,0,0,0.08),
+    200px 300px 0 rgba(139,0,0,0.12),
+    600px 350px 0 rgba(139,0,0,0.15),
+    400px 400px 0 rgba(139,0,0,0.1),
+    150px 500px 0 rgba(139,0,0,0.18);
+}
+
+.particles::after {
+  top: 60%;
+  left: 50%;
+  box-shadow:
+    -100px -50px 0 rgba(139,0,0,0.12),
+    -300px -150px 0 rgba(139,0,0,0.08),
+    100px -80px 0 rgba(139,0,0,0.15),
+    -200px 100px 0 rgba(139,0,0,0.1),
+    200px 50px 0 rgba(139,0,0,0.2),
+    -50px 200px 0 rgba(139,0,0,0.1),
+    150px -200px 0 rgba(139,0,0,0.15),
+    -250px 50px 0 rgba(139,0,0,0.12);
+}
+
+@keyframes float {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-100vh) rotate(360deg); }
+}
+
+/* ── Blur overlay for tab-away ── */
+.blurred-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(20px);
+}
+
+.blurred-overlay p {
+  color: #8b0000;
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* ── Strike Warning Banner ── */
+.strike-warning {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  border: 1px solid rgba(220, 38, 38, 0.4);
+  background: linear-gradient(135deg, rgba(30, 5, 5, 0.95), rgba(15, 5, 5, 0.95));
+  box-shadow: 0 0 30px rgba(220, 38, 38, 0.2), inset 0 0 20px rgba(139, 0, 0, 0.1);
+  backdrop-filter: blur(12px);
+}
+
+/* ── Disqualification Screen ── */
+.dq-screen {
+  position: fixed;
+  inset: 0;
+  background: #050505;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.dq-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(139, 0, 0, 0.03) 2px,
+    rgba(139, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  animation: scanlines 0.1s linear infinite;
+}
+
+@keyframes scanlines {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
+}
+
+.dq-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(80, 0, 0, 0.15) 80%, rgba(0, 0, 0, 0.6) 100%);
+  pointer-events: none;
+}
+
+.dq-stamp {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 900;
+  color: #8b0000;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 20px rgba(139, 0, 0, 0.6),
+    0 0 60px rgba(139, 0, 0, 0.3),
+    0 0 100px rgba(139, 0, 0, 0.15);
+  animation: dqPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes dqPulse {
+  0% { text-shadow: 0 0 20px rgba(139,0,0,0.6), 0 0 60px rgba(139,0,0,0.3); opacity: 0.9; }
+  100% { text-shadow: 0 0 40px rgba(139,0,0,0.8), 0 0 80px rgba(139,0,0,0.5); opacity: 1; }
+}
