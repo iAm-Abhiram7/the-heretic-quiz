@@ -3,11 +3,14 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { questions, questionsVersion } from "@/data/questions";
 import { playSound } from "./AudioManager";
 
 export default function DisqualifiedScreen() {
   const router = useRouter();
   const [flickerDone, setFlickerDone] = useState(false);
+  const [sendStatus, setSendStatus] = useState<"idle" | "sending" | "sent" | "failed">("idle");
+  const [sendError, setSendError] = useState<string | null>(null);
 
   useEffect(() => {
     playSound("glitch");
@@ -17,6 +20,41 @@ export default function DisqualifiedScreen() {
       clearTimeout(t1);
       clearTimeout(t2);
     };
+  }, []);
+
+  useEffect(() => {
+    const score = 0;
+    const total = questions.length;
+    const token = `${questionsVersion}:${score}:${total}:dq`;
+
+    try {
+      const sent = localStorage.getItem("quiz_dq_sent");
+      if (sent === token) return;
+    } catch {
+      // ignore
+    }
+
+    const sendScore = async () => {
+      try {
+        setSendStatus("sending");
+        await fetch("/api/send-score", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            score,
+            total,
+            verdict: "Disqualified",
+          }),
+        });
+        localStorage.setItem("quiz_dq_sent", token);
+        setSendStatus("sent");
+      } catch {
+        setSendError("Email send failed.");
+        setSendStatus("failed");
+      }
+    };
+
+    sendScore();
   }, []);
 
   const handleReturn = () => {
@@ -104,6 +142,13 @@ export default function DisqualifiedScreen() {
         <p className="text-5xl font-bold text-red-800/60">
           0<span className="text-xl text-neutral-700">/20</span>
         </p>
+        {sendStatus !== "idle" && (
+          <p className={`mt-2 text-xs ${sendStatus === "sent" ? "text-green-400" : sendStatus === "failed" ? "text-red-400" : "text-neutral-400"}`}>
+            {sendStatus === "sending" && "Sending score email..."}
+            {sendStatus === "sent" && "Score email sent."}
+            {sendStatus === "failed" && (sendError || "Email failed to send.")}
+          </p>
+        )}
       </motion.div>
 
       {/* Return button */}
